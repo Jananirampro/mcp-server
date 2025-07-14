@@ -1,0 +1,26 @@
+.env
+.env.*
+mcp_logs.txt
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# 🧪 Test Output & Logs
+*.log
+
+mcp_logs.txt
+chat_logs.txt
+# 📦 Virtual Environment
+venv/
+ENV/
+env/
+.venv/
+
+# 🧠 VSCode & PyCharm
+.vscode/
+.idea/
+
+# 🚫 OS Files
+.DS_Store
+Thumbs.db

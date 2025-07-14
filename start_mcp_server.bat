@@ -1,0 +1,6 @@
+@echo off
+echo ✅ Activating virtual environment...
+cd /d C:\Workspace\MCP-Server
+call venv\Scripts\activate
+echo 🚀 Starting MCP server...
+uvicorn main:app --reload
