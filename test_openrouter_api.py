@@ -3,7 +3,7 @@ from utils.router_client import call_model
 
 # Define test input
 test_message = "What is the capital of France?"
-test_model = "openrouter/cypher-alpha:free"
+test_model = "openrouter/openchat:free"
 
 async def test_call():
     response = await call_model(test_model, test_message)

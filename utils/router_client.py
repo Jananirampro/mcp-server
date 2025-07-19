@@ -3,11 +3,12 @@
 import os
 import httpx
 from dotenv import load_dotenv
+import logging 
 
 load_dotenv()
 
 OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY")
-print(f"🔑 API Key Loaded: {OPENROUTER_API_KEY}")
+print(f"🔑 API Key Loaded")
 OPENROUTER_BASE_URL = "https://openrouter.ai/api/v1/chat/completions"
 
 async def call_model(model: str, message: str) -> str:
@@ -25,7 +26,7 @@ async def call_model(model: str, message: str) -> str:
     }
 
     try:
-        async with httpx.AsyncClient(timeout=15) as client:
+        async with httpx.AsyncClient(timeout=30) as client:
             response = await client.post(
                 OPENROUTER_BASE_URL,
                 headers=headers,

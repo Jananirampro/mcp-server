@@ -11,7 +11,8 @@ load_dotenv()
 logging.basicConfig(
     filename="mcp_logs.txt",
     level=logging.INFO,
-    format="%(asctime)s - %(message)s"
+    format="%(asctime)s - %(message)s",
+    encoding="utf-8"  # ✅ Prevent UnicodeDecodeError on Render
 )
 
 app = FastAPI()
@@ -20,10 +21,12 @@ class ChatRequest(BaseModel):
     model: str
     message: str
 
+# ✅ Health check route
 @app.get("/health")
 async def health_check():
     return {"status": "✅ MCP server is healthy"}
 
+# ✅ Main chat handler
 @app.post("/chat")
 async def chat(chat_request: ChatRequest):
     logging.info(f"Request received: {chat_request.model} | {chat_request.message}")
@@ -36,6 +39,7 @@ async def chat(chat_request: ChatRequest):
         logging.error(f"Error: {e}")
         return {"error": str(e)}
 
+# ✅ View logs route
 @app.get("/logs", response_class=PlainTextResponse)
 async def get_logs():
     log_path = "mcp_logs.txt"
@@ -48,3 +52,17 @@ async def get_logs():
             return content if content else "📭 Log file is empty."
     except Exception as e:
         return f"❌ Error reading logs: {str(e)}"
+
+# ✅ Print startup message for both Render and Local
+@app.on_event("startup")
+async def startup_event():
+    platform = "Render" if os.environ.get("RENDER") == "true" else "Local"
+    print(f"✅ MCP Server is running on {platform}")
+    logging.info(f"✅ MCP Server started on {platform}")
+
+# ✅ Local manual run block (Render ignores this)
+if __name__ == "__main__":
+    import uvicorn
+    port = int(os.environ.get("PORT", 8000))  # Render sets PORT; fallback to 10000
+    print(f"🔧 Starting MCP server locally on port {port}")
+    uvicorn.run("main:app", host="0.0.0.0", port=port)    

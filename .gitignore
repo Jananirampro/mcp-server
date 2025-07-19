@@ -1,21 +1,13 @@
 .env
-.env.*
-mcp_logs.txt
 __pycache__/
-*.py[cod]
-*.pyo
-*.pyd
 
-# 🧪 Test Output & Logs
-*.log
-
-mcp_logs.txt
 chat_logs.txt
-# 📦 Virtual Environment
+bot_logs.txt
+.venv/
 venv/
-ENV/
 env/
 .venv/
+venv-311/
 
 # 🧠 VSCode & PyCharm
 .vscode/
